@@ -10,10 +10,10 @@ public class Main {
             availableProducts = new ArrayList<>();
         }
 
-        Inventory inventory = new Inventory();
-        User user = new User("Bolodya");
+        final Inventory inventory = new Inventory();
+        final User user = new User("Bolodya");
 
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
 
         int choice;
         do {
@@ -31,22 +31,22 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.print("Enter the product name: ");
-                    String productName = scanner.next();
+                    final String productName = scanner.next();
                     System.out.print("Enter the product price (in $): ");
-                    double productPrice = scanner.nextDouble();
-                    Product newProduct = new Product(productName, productPrice);
+                    final double productPrice = scanner.nextDouble();
+                    final Product newProduct = new Product(productName, productPrice);
                     inventory.addProduct(newProduct);
                     availableProducts.add(newProduct);
                     break;
                 case 2:
                     System.out.print("Enter the product name to purchase: ");
-                    String purchasedProductName = scanner.next();
-                    Product purchasedProduct = availableProducts.stream()
+                    final String purchasedProductName = scanner.next();
+                    final Product purchasedProduct = availableProducts.stream()
                             .filter(p -> p.getName().equalsIgnoreCase(purchasedProductName))
                             .findFirst()
                             .orElse(null);
                     if (purchasedProduct != null) {
-                        int quantity = getUserInputForQuantity(scanner);
+                        final int quantity = getUserInputForQuantity(scanner);
                         user.setPurchaseQuantity(purchasedProduct, quantity);
                         inventory.sellProduct(purchasedProduct, quantity);
                     } else {
@@ -54,18 +54,18 @@ public class Main {
                     }
                     break;
                 case 3:
-                    Order order = new Order(user.getPurchases());
+                    final Order order = new Order(user.getPurchases());
                     order.generateReceipt("order_receipt.txt");
                     System.out.println("Receipt generated and saved in 'order_receipt.txt'");
                     break;
                 case 4:
-                    Order orderForAnalysis = new Order(user.getPurchases());
-                    Product mostPopularProduct = orderForAnalysis.findMostPopularProduct();
+                    final Order orderForAnalysis = new Order(user.getPurchases());
+                    final Product mostPopularProduct = orderForAnalysis.findMostPopularProduct();
                     System.out.println("Most popular product: " + mostPopularProduct.getName());
                     break;
                 case 5:
-                    Order orderForAnalysisSave = new Order(user.getPurchases());
-                    Product mostPopularProductSave = orderForAnalysisSave.findMostPopularProduct();
+                    final Order orderForAnalysisSave = new Order(user.getPurchases());
+                    final Product mostPopularProductSave = orderForAnalysisSave.findMostPopularProduct();
                     orderForAnalysisSave.saveMostPopularProductToFile("accounting.txt", mostPopularProductSave);
                     System.out.println("Information about the most popular product saved in 'accounting.txt'");
                     break;
@@ -82,7 +82,7 @@ public class Main {
         scanner.close();
     }
 
-    private static int getUserInputForQuantity(Scanner scanner) {
+    private static int getUserInputForQuantity(final Scanner scanner) {
         int quantity;
         do {
             System.out.print("Enter the quantity: ");
